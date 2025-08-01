@@ -1,0 +1,22 @@
+class DatabaseConnection:
+    _instance = None
+
+    def __new__(cls):
+        if cls._instance is None:
+            print("Creando nueva conexión a la base de datos")
+            cls._instance = super().__new__(cls)
+            cls._instance.connection_params = {
+                'host': 'localhost',
+                'port': 5432,
+                'user': 'admin',
+                'password': 'secret'
+            }
+        return cls._instance
+
+    def query(self, sql):
+        print(f"Ejecutando consulta: {sql} en {self.connection_params['host']}")
+        return f"Resultados de: {sql}"
+
+    def __str__(self):
+        return f"Conexión a DB: {self.connection_params}"
+
